@@ -23,6 +23,8 @@
 		<log4j.version>1.2.17</log4j.version>
 		<sonar.host.url>http://13.234.240.207:9000/</sonar.host.url>
 		<sonar.login>b94c123c98951d1c0703fe6bd1b2f8b472dad88f</sonar.login>
+		
+		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
