@@ -5,7 +5,7 @@ git branch: 'development', credentialsId: 'bd2b9d51-1405-44e3-a489-5b7e6ff16390'
 try{
 stage('build'){
 sh "${mavenhome}/bin/mvn clean package"}
-
+/*
 stage('sonarqube report'){
 sh "${mavenhome}/bin/mvn clean sonar:sonar" 
 }
@@ -13,17 +13,18 @@ stage('deploying to artifact repo'){
 sh "${mavenhome}/bin/mvn clean deploy" 
 }
 stage('deploytotomcat'){
-sshagent(['3f35840e-6e04-4602-84ce-8889c99599b5']){ 
-sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.41.118:/opt/apache-tomcat-9.0.65/webapps/"}
+sshagent(['3f35840e-6e04-4602-84ce-8889c99599b5'])
+sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.41.118:/opt/apache-tomcat-9.0.65/webapps/"}*/
 
-}
-} catch (e) {
+
+}// try closing
+catch (e) {
     // If there was an exception thrown, the build failed
-    currentBuild.result = "FAILED"
+    slacknotify(currentBuild.result)
     throw e } 
      finally {
     // Success or failure, always send notifications
-    notifyBuild(currentBuild.result)}
+    slacknotify(currentBuild.result)}
 
 } // node closing
 //code for slack notification
