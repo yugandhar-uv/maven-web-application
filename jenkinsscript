@@ -1,5 +1,6 @@
 node{
 def mavenhome = tool name: "maven3.8.6"
+try{
 stage('checkoutcode'){
 git branch: 'development', credentialsId: 'bd2b9d51-1405-44e3-a489-5b7e6ff16390', url: 'https://github.com/yugandhar-uv/maven-web-application.git'}
 
@@ -13,11 +14,11 @@ stage('deploying to artifact repo'){
 sh "${mavenhome}/bin/mvn clean deploy" 
 }
 stage('deploytotomcat'){
-sshagent(['3f35840e-6e04-4602-84ce-8889c99599b5'])
-sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.41.118:/opt/apache-tomcat-9.0.65/webapps/"}*/
+sshagent(['3f35840e-6e04-4602-84ce-8889c99599b5']){
+sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.41.118:/opt/apache-tomcat-9.0.65/webapps/"}
 
-
-/*
+}
+}
 catch (e) {
     // If there was an exception thrown, the build failed
     slacknotify(currentBuild.result)
